@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Go Guestbook</title>
+  </head>
+  <body>
+    <fieldset>
+    <form action="/sign" method="post">
+      <div>First Name<input type="text" name="fname"></div>
+      <div>Last Name<input type="text" name="lname"></div>
+      <div><p>Including CS496, how many classes are you taking this term?</p>
+        <input type="radio" name="class" value="One" checked>1<br>
+        <input type="radio" name="class" value="Two or More">2+<br>
+      </div>
+      <div><p>Is this your last term till graduation?</br>
+        <label><input type="checkbox" id="grad" name="grad" >Graduating 12/2015</label>
+      </div>
+      <div><p>Message to other CS496 peers:<p>
+        <textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+    </fieldset>
+    <br><div><a href="/view">View Posts</a></div>
+  </body>
+</html>
+

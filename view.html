@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Go Guestbook</title>
+  </head>
+  <body>
+  <fieldset>
+    {{range .}}
+      <p><b>First Name:</b><p>
+        {{with .Data.FirstName}}
+        <p>{{.}}</p>
+      {{else}}
+        <p>Anonymous:</p>
+      {{end}}
+      <p><b>Last Name:</b><p>
+      {{with .Data.LastName}}
+        <p>{{.}}</p>
+      {{else}}
+        <p>Anonymous</p>
+      {{end}}
+       <p><b>Amount of Classes:</b><p> <pre>{{.Data.Class}}</pre>
+       <p><b>Graduating:</b><p> <pre>{{.Data.Grad}}</pre>
+       <p><b>Message to Class:</b><p><pre>{{.Data.Content}}</pre>
+        <a href="/edit/{{.ID}}">Edit Entry</a>
+        <p>~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~</p>
+    {{end}}
+  </fieldset>
+  </body>
+</html>
