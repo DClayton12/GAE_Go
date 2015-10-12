@@ -14,7 +14,7 @@ import (
 var templates = template.Must(template.ParseFiles(
 	"guestbookform.html",
 	"view.html",
-	"templates/edit.html",
+	"edit.html",
 ))
 
 type Greeting struct {
@@ -86,31 +86,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
         }
 }
 
-var guestbookTemplate = template.Must(template.New("book").Parse(`
-<html>
-  <head>
-    <title>Go Guestbook</title>
-  </head>
-  <body>
-    <form action="/sign" method="post">
-      <div>First Name<input type="text" name="fname"></div>
-      <div>Last Name<input type="text" name="lname"></div>
-      <div><p>Including CS496, how many classes are you taking this term?</p>
-	<input type="radio" name="class" value="One" checked>1<br>
-  	<input type="radio" name="class" value="Two or More">2+<br>
-      </div>
-      <div><p>Is this your last term till graduation?</br>
-	<label><input type="checkbox" id="grad" name="grad" >Graduating 12/2015</label>
-      </div>
-      <div><p>Message to other CS496 peers:<p>
-	<textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Sign Guestbook"></div>
-    </form>
-    <br><div><a href="/view">View Posts</a></div>
-  </body>
-</html>
-`))
-
 func sign(w http.ResponseWriter, r *http.Request) {
         c := appengine.NewContext(r)
         r.ParseForm()
@@ -168,37 +143,6 @@ func view(w http.ResponseWriter, r *http.Request) {
         }
 }
 
-var showTemplate = template.Must(template.New("book").Parse(`
-<html>
-  <head>
-    <title>Go Guestbook</title>
-  </head>
-  <body>
-  <fieldset>
-    {{range .}}
-      <p><b>First Name:</b><p>
-	{{with .FirstName}}
-        <p>{{.}}</p>
-      {{else}}
-        <p>Anonymous:</p>
-      {{end}}
-      <p><b>Last Name:</b><p>
-      {{with .LastName}}
-        <p>{{.}}</p>
-      {{else}}
-        <p>Anonymous</p>
-      {{end}}
-       <p><b>Amount of Classes:</b><p> <pre>{{.Class}}</pre>
-       <p><b>Graduating:</b><p> <pre>{{.Grad}}</pre>
-       <p><b>Message to Class:</b><p><pre>{{.Content}}</pre>
-	<a href="/edit/{{.ID}}">Edit Entry</a>
-        <p>~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~</p>
-    {{end}}
-  </fieldset>
-  </body>
-</html>
-`))
-
 func editHandler(w http.ResponseWriter, r *http.Request) {
 
     c := appengine.NewContext(r)
@@ -244,44 +188,3 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 
-var editTemplate = template.Must(template.New("edit").Parse(`
-<html>
-  <head>
-    <title>Go Guestbook</title>
-  </head>
-  <body>
-    <div class="container">
-    <a href="/">Main Page</a>
-    <br>
-    <hr>
-    <h2>Edit</h2>
-    {{if .Data}}
-    <form action="/edit/{{.Id}}" method="post">
-      <div><First Name<input type="text" name="fname" value="{{.Data.FirstName}}"></div>
-      <div>Last Name<input type="text" name="lname" value="{{.Data.LastName}}"></div>
-      <div><p>Including CS496, how many classes are you taking this term?</p>
-        <input type="radio" name="class" value="One" checked>1<br>
-        <input type="radio" name="class" value="Two or More">2+<br>
-      </div>
-      <div><p>Is this your last term till graduation?</br>
-        <label><input type="checkbox" id="grad" name="grad" >Graduating 12/2015</label>
-      </div>
-      <div><p>Message to other CS496 peers:<p>
-        <textarea name="content" rows="3" cols="60">{{.Data.Content}}</textarea></div>
-      <div><input type="submit" value="Submit"></div>
-    </form>
-    {{else}}
-    <h2>Error, this entity does not exist in the datastore.</h2>
-    <a href="/">Main Page</a>
-    {{end}}
-    <h3>List of Posts</h3>
-    <br>
-    <ul>
-    {{range .}}
-        <li><a href="templates/edit/{{.Id}}">{{.Data.Title}}</a></li>
-    {{end}}
-    </ul>
-    <br><div><a href="/view">View Posts</a></div>
-  </body>
-</html>
-`))
