@@ -10,13 +10,13 @@
     {{if .Data}}
     <fieldset>
     <form action="/edit/{{.ID}}" method="post">
-      <div><p>First Name {{.Data.FirstName}}</p><input type="text" name="fname"></div>
-      <div><p>Last Name {{.Data.LastName}}</p><input type="text" name="lname"></div>
-      <div><p>Including CS496, how many classes are you taking this term?</p>
+      <div><p>First Name </p><input type="text" value="{{.Data.FirstName}}" name="fname"></div>
+      <div><p>Last Name </p><input type="text" value="{{.Data.LastName}}"name="lname"></div>
+      <div><p>Including CS496, how many classes are you taking this term? {{.Data.Class}}</p>
         <input type="radio" name="class" value="One">1
         <input type="radio" name="class" value="Two or More">2+
       </div>
-      <div><p>Is this your last term till graduation?</p>
+      <div><p>Is this your last term till graduation? {{.Data.Grad}}</p>
         <label><input type="checkbox" id="grad" name="grad" >Graduating 12/2015</label>
       </div>
       <div><p>Message to other CS496 peers:</p>
